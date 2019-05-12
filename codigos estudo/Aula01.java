@@ -21,27 +21,27 @@ class PrinterI implements Runnable{
         this.acabou = false;
     }
 
-    public void printer() throws InterruptedException {
+    public void printer() {
         
         while(!this.acabou) {
             System.out.println(this.i);
             try{
-            wait(100);
+                Thread.sleep(100);
+            }catch (InterruptedException ie) {
+                this.acabou = true;
+                System.out.println("unable to interrupt");
             }
-            catch(InterruptedException e){
-                acabou = true;
-                System.out.println("unable to wait");
-            }
+            
         } 
     }
 
     public void run() {
         this.acabou = false;
-        this.printer();
-        while(!acabou) {
+        printer();
+        while(!this.acabou) {
             i = in.nextInt();
             if (i == 0) {
-                this.acabou = false;
+                this.acabou = true;
             }
         }
     }
